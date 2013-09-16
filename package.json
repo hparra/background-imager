@@ -1,0 +1,34 @@
+{
+  "name": "background-imager",
+  "version": "0.0.1",
+  "description": "Reads directory for images and produces CSS background-image classes",
+  "main": "index.js",
+  "scripts": {
+    "test": "for f in test/*.js; do echo \"$f\"; node \"$f\"; done; exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hparra/background-imager.git"
+  },
+  "keywords": [
+    "background-image",
+    "device-pixel-ratio",
+    "resolution",
+    "media query",
+    "css",
+    "retina",
+    "responsive",
+    "image",
+    "mobile"
+  ],
+  "author": "Hector Parra",
+  "license": "MIT",
+  "dependencies": {
+    "q": "~0.9.7",
+    "gm": "~1.13.1",
+    "commander": "~2.0.0"
+  },
+  "bin": {
+    "background-imager" : "background-imager.js"
+  }
+}
