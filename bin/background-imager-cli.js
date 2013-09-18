@@ -98,7 +98,9 @@ tabSpacing = tabSpacing.replace(/\\t/gi, '\t').replace(/\\s/gi, ' ');
     fs.readdir(filepath, function (err, files) {
 
         if (err) {
-            throw err; // error reading directory
+            console.error(err);
+            console.error("There was an error reading the directory.");
+            process.exit(1);
         }
 
         // filter image files from directory
@@ -187,7 +189,9 @@ tabSpacing = tabSpacing.replace(/\\t/gi, '\t').replace(/\\s/gi, ' ');
             });
         })
         .fail(function (err) {
-            throw err; // some MediaRule was not completed successfully
+            console.error(err);
+            console.error("Some MediaRule was not completed successfully");
+            process.exit(1);
         });
 
     });
