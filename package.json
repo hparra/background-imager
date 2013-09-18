@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Reads directory for images and produces CSS background-image classes",
   "main": "index.js",
+  "bin": "./bin/background-imager-cli.js",
   "scripts": {
     "test": "for f in test/*.js; do echo \"$f\"; node \"$f\"; done; exit 0"
   },
@@ -27,8 +28,5 @@
     "q": "~0.9.7",
     "gm": "~1.13.1",
     "commander": "~2.0.0"
-  },
-  "bin": {
-    "background-imager" : "background-imager.js"
   }
 }
