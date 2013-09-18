@@ -81,9 +81,11 @@ var MEDIA_EXPRESSION_MOBILE_MAX_WIDTH = "(max-width: 480px)";
 
 // options specified
 var filepath = process.argv[2],
-    urlPath = program.urlPath,
-    classnamePrefix = program.classPrefix || "",
-    tabSpacing = program.tabSpacing;
+    tabSpacing = program.tabSpacing,
+    cssOptions = {
+        urlPath: program.urlPath,
+        classnamePrefix: program.classPrefix || "",
+    };
 
 // escape \t and \s properly
 tabSpacing = tabSpacing.replace(/\\t/gi, '\t').replace(/\\s/gi, ' ');
@@ -111,7 +113,7 @@ tabSpacing = tabSpacing.replace(/\\t/gi, '\t').replace(/\\s/gi, ' ');
             process.exit(1);
         }
 
-        // array of MediaRules, one for each scenario:
+        // array of abstract (incomplete) MediaRules, one for each scenario:
         // * 1x
         // * 2x
         // * mobile 1x
@@ -121,7 +123,7 @@ tabSpacing = tabSpacing.replace(/\\t/gi, '\t').replace(/\\s/gi, ' ');
         // * MediaQueries
         // * RuleSets
         // * image filenames (not part of CSS)
-        var mediaRules = [{
+        var abstractMediaRules = [{
             // 1x
             queries: null,
             images: images.filter(bgi.isNotSmallImage).filter(bgi.is1xImage)
@@ -145,47 +147,17 @@ tabSpacing = tabSpacing.replace(/\\t/gi, '\t').replace(/\\s/gi, ' ');
             images: images.filter(bgi.isSmallImage).filter(bgi.is2xImage)
         }];
 
-        // array of promises so we know when all MediaRules are completed
-        // promises allow us to write MediaRules to stddout in proper order
-        var mediaRulePromises = mediaRules.map(function(mediaRule) {
+        // create media rules
+        bgi.createMediaRules(abstractMediaRules, filepath, cssOptions, function(err, mediaRules) {
+            
+            if (err) {
+                console.error(err);
+                console.error("Some MediaRule was not completed successfully");
+                process.exit(1);
+            }
 
-            var deferred = Q.defer();
-
-            // generate RuleSet for each image
-            Q.allSettled(mediaRule.images.map(function (filename) {
-                return bgi.generateRuleSet(filename, filepath, {
-                    urlPath: urlPath,
-                    classnamePrefix: classnamePrefix
-                })
-            }))
-            .then(function (results) {
-
-                // copy completed RuleSets into mediaRule.rulesets
-                mediaRule.rulesets = [];
-                results.forEach(function (result) {
-                    mediaRule.rulesets.push(result.value);
-                });
-
-                deferred.resolve();
-            })
-            .fail(function (err) {
-                // some RuleSet was not produced successfully
-                deferred.reject(err);
-            });
-
-            return deferred.promise;
-        });
-
-        // if all MediaRules are ready
-        // then write CSS to stdout
-        Q.allSettled(mediaRulePromises)
-        .then(function () {
+            // print CSS
             console.log(bgi.generateCSS(mediaRules, tabSpacing));
-        })
-        .fail(function (err) {
-            console.error(err);
-            console.error("Some MediaRule was not completed successfully");
-            process.exit(1);
         });
 
     });
