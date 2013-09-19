@@ -1,8 +1,8 @@
 {
   "name": "background-imager",
   "version": "0.0.1",
-  "description": "Reads directory for images and produces CSS background-image classes",
-  "main": "index.js",
+  "description": "Reads directory for images and produces responsive CSS background-image classes",
+  "main": "./lib/background-imager.js",
   "bin": "./bin/background-imager-cli.js",
   "scripts": {
     "test": "for f in test/*.js; do echo \"$f\"; node \"$f\"; done; exit 0"
