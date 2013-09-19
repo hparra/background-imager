@@ -1,6 +1,6 @@
 var exec = require('child_process').exec;
 
-var command = "./background-imager.js test/images/ -u images/ | diff test/noodle.css -"
+var command = "./bin/background-imager-cli.js test/images/ -u images/ | diff test/noodle.css -"
 
 var child = exec(command, function(err, stdout, stderr) {
     
@@ -10,13 +10,14 @@ var child = exec(command, function(err, stdout, stderr) {
     } else {
 		// output diff and error msg
 		console.log(stdout);
-		console.log(stderr);
+		console.error(stderr);
 		console.log("Test FAILED\n");
     }
 
     // for whatever reason failed test also results in error?
     if (err) {
-    	console.log(err)
+    	console.error(err);
+
     	throw err; // there was an error executing command
     }
  
