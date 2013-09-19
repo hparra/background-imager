@@ -14,7 +14,7 @@
 //
 // background imager understands the @1x, @2x, and -small descriptors
 //
-// Example: A directory with the following images will produce the proceeding CSS
+// Example: A directory with the following images will produce similar CSS:
 //
 // ```
 // poodle@1x.jpg
@@ -58,8 +58,7 @@
 
 var program = require("commander"),
     bgi = require("../lib/background-imager.js"),
-    fs = require('fs'),
-    Q = require('q');
+    fs = require('fs');
 
 // options
 program
@@ -84,7 +83,7 @@ var filepath = process.argv[2],
     tabSpacing = program.tabSpacing,
     cssOptions = {
         urlPath: program.urlPath,
-        classnamePrefix: program.classPrefix || "",
+        classPrefix: program.classPrefix,
     };
 
 // escape \t and \s properly
@@ -149,7 +148,7 @@ tabSpacing = tabSpacing.replace(/\\t/gi, '\t').replace(/\\s/gi, ' ');
 
         // create media rules
         bgi.createMediaRules(abstractMediaRules, filepath, cssOptions, function(err, mediaRules) {
-            
+
             if (err) {
                 console.error(err);
                 console.error("Some MediaRule was not completed successfully");
