@@ -1,8 +1,10 @@
 # background-imager.js
 
-Reads a directory for images with special descriptors to produce responsive CSS classes using background-image. It is particularly helpful when dealing with a large number of classes with 2 or more image versions.
+Reads a directory for images with special descriptors to produce responsive CSS classes using background-image. It is particularly helpful when dealing with a large number of classes with 2 or more image versions each.
 
-A directory with the following images produces similar proceeding CSS output:
+## Example
+
+A directory with the following images...
 
 ```
 noodle@1x.png
@@ -10,6 +12,9 @@ noodle@2x.png
 noodle-small@1x.png
 noodle-small@2x.png
 ```
+
+...produces similar proceeding CSS output:
+
 
 ```css
 .noodle {
@@ -41,7 +46,7 @@ noodle-small@2x.png
 }
 ```
 
-Actual output contains several media queries per media rule to ensure cross-platform device-pixel-ratio support.
+(Actual output contains several media queries per media rule to ensure cross-platform device-pixel-ratio support. They were removed here for brevity.)
 
 ## Use
 
@@ -58,7 +63,7 @@ background-imager.js assumes ImageMagick is installed.
 
 On Mac OS X via brew `brew install imagemagick`
 
-## Example
+## Demo
 
 See `test/noodle.html`, which uses `test/noodle.css` that was generated from running script against `images/`. This is also part of the testing.
 
@@ -68,19 +73,21 @@ See `test/noodle.html`, which uses `test/noodle.css` that was generated from run
 npm test
 ```
 
-At the moment there is a simple test using diff between produced CSS output and expected output (file). A proper testing framework implementing this ability should be used. If you have a suggestion please file an issue.
+At the moment there is a simple test using diff between produced CSS output and expected output (file). A proper testing framework implementing this ability should be used. CLI must be further refactored to allow for proper testing.
 
 ## TODO
 
-* Improve testing
-* Support both GraphicsMagick and ImageMagick
+* Add tests for module and CLI
+* Add support for both GraphicsMagick and ImageMagick
 * Add support for @1.5x
+* Add tablet support (medium)
+* Add option to specify media expression used for -small
 
 ## License
 
 (The MIT License)
 
-Copyright (c) 2013 [Hector Guillermo Parra Alvarez](hector@hectorparra.com)
+Copyright (c) 2013 [Hector Guillermo Parra Alvarez](mailto:hector@hectorparra.com)
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
