@@ -5,7 +5,7 @@
   "main": "./lib/background-imager.js",
   "bin": "./bin/background-imager-cli.js",
   "scripts": {
-    "test": "for f in test/*.js; do echo \"$f\"; node \"$f\"; done; exit 0"
+    "test": "echo \"funtional.js\"; node test/functional.js; mocha -R spec; exit 0"
   },
   "repository": {
     "type": "git",
@@ -28,5 +28,9 @@
     "q": "~0.9.7",
     "gm": "~1.13.1",
     "commander": "~2.0.0"
+  },
+  "devDependencies": {
+    "mocha": "~1.13.0",
+    "should": "~1.3.0"
   }
 }
