@@ -58,6 +58,7 @@
 
 var program = require("commander"),
     bgi = require("../lib/background-imager.js"),
+    ifh = require("../lib/image-filename-helper.js"),
     fs = require('fs');
 
 // options
@@ -105,7 +106,7 @@ tabSpacing = tabSpacing.replace(/\\t/gi, '\t').replace(/\\s/gi, ' ');
         }
 
         // filter image files from directory
-        var images = files.filter(bgi.isImage);
+        var images = files.filter(ifh.isImage);
 
         if (images.length === 0) {
             console.error("There are no images in specified directory.");
@@ -125,11 +126,11 @@ tabSpacing = tabSpacing.replace(/\\t/gi, '\t').replace(/\\s/gi, ' ');
         var abstractMediaRules = [{
             // 1x
             queries: null,
-            images: images.filter(bgi.isNotSmallImage).filter(bgi.is1xImage)
+            images: images.filter(ifh.isNotSmallImage).filter(ifh.is1xImage)
         },{
             // 2x
             queries: bgi.generate2xMediaQueries(),
-            images: images.filter(bgi.isNotSmallImage).filter(bgi.is2xImage)
+            images: images.filter(ifh.isNotSmallImage).filter(ifh.is2xImage)
         },{
             // mobile 1x
             queries: [
@@ -137,13 +138,13 @@ tabSpacing = tabSpacing.replace(/\\t/gi, '\t').replace(/\\s/gi, ' ');
                     MEDIA_EXPRESSION_MOBILE_MAX_WIDTH
                 ])
             ],
-            images: images.filter(bgi.isSmallImage).filter(bgi.is1xImage)
+            images: images.filter(ifh.isSmallImage).filter(ifh.is1xImage)
         },{
             // mobile 2x
             queries: bgi.generate2xMediaQueries([
                 MEDIA_EXPRESSION_MOBILE_MAX_WIDTH
             ]),
-            images: images.filter(bgi.isSmallImage).filter(bgi.is2xImage)
+            images: images.filter(ifh.isSmallImage).filter(ifh.is2xImage)
         }];
 
         // create media rules
