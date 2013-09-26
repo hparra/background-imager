@@ -5,7 +5,7 @@
   "main": "./lib/background-imager.js",
   "bin": "./bin/background-imager-cli.js",
   "scripts": {
-    "test": "echo \"funtional.js\"; node test/functional.js; mocha -R spec; exit 0"
+    "test": "mocha -R spec"
   },
   "repository": {
     "type": "git",
