@@ -176,54 +176,33 @@ describe("ImageFilenameHelper", function () {
 		describe("#parseFilename", function () {
 			// noodle.jpg
 			it("should return correct image file object when filename is \"noodle.jpg\"", function () {
-				var obj = helper.parseFilename("noodle.jpg");
+				var obj = helper.parseFilename("/path/to/noodle.jpg");
 				obj.should.be.instanceOf(Object);
-				obj.should.have.property("name", "noodle");
-				obj.should.have.property("extension", "jpg");
+				obj.should.have.property("classname", "noodle");
+				obj.should.have.property("extname", "jpg");
 				obj.should.have.property("queries")
 					.and.be.instanceOf(Array).and.be.empty;
 			})
 			// noodle@1x^640w.jpg
 			it("should return correct image file object when filename is \"noodle@1x^640w.jpg\"", function () {
-				var obj = helper.parseFilename("noodle@1x^640w.jpg");
+				var obj = helper.parseFilename("/path/to/noodle@1x^640w.jpg");
 				obj.should.be.instanceOf(Object);
-				obj.should.have.property("name", "noodle");
-				obj.should.have.property("extension", "jpg");
+				obj.should.have.property("classname", "noodle");
+				obj.should.have.property("extname", "jpg");
 				obj.should.have.property("queries")
 					.and.be.instanceOf(Array)
-					.and.includeEql(
-						[{
-							feature: "min-device-pixel-ratio",
-							value: 1
-						},{
-							feature: "min-width",
-							value: "640px"
-						}]
-					);
+					.and.include("1x^640w");
 			})
 			// noodle@640w^2x,1x.jpg
 			it("should return correct image file object when filename is \"noodle@640w^2x,1x.jpg\"", function () {
-				var obj = helper.parseFilename("noodle@640w^2x,1x.jpg");
+				var obj = helper.parseFilename("/path/to/noodle@640w^2x,1x.jpg");
 				obj.should.be.instanceOf(Object);
-				obj.should.have.property("name", "noodle");
-				obj.should.have.property("extension", "jpg");
+				obj.should.have.property("classname", "noodle");
+				obj.should.have.property("extname", "jpg");
 				obj.should.have.property("queries")
 					.and.be.instanceOf(Array)
-					.and.includeEql(
-						[{
-							feature: "min-width",
-							value: "640px"
-						},{
-							feature: "min-device-pixel-ratio",
-							value: 2
-						}]
-					)
-					.and.includeEql(
-						[{
-							feature: "min-device-pixel-ratio",
-							value: 1
-						}]
-					);
+					.and.include("640w^2x")
+					.and.include("1x");
 			})
 		})
 	})
