@@ -5,7 +5,6 @@ var should = require('should'),
 
 describe("BackgroundImager", function () {
 
-    // TODO: expand
     describe("#getImageFileInfo", function () {
         // noodle@1x.png
         it("should return the expected file info \"noodle@1x^480w.png\"", function (done) {
@@ -63,7 +62,6 @@ describe("BackgroundImager", function () {
         })
     })
 
-    // TODO: expand
     describe("#getImageFileInfoArray", function () {
 
         var filepaths = [
@@ -107,5 +105,76 @@ describe("BackgroundImager", function () {
                 done();
             })
         });
+    })
+
+    // NOTE: ugly test - is there a better way to do this?
+    describe("groupImageFileInfoByQuery", function () {
+        var imageFileInfoArray = [{
+            filepath: "test/images/noodle@1x,2x^480w.png",
+            classname: "noodle",
+            queries: [
+                "1x",
+                "2x^480w"
+            ],
+            width: 64,
+            height: 64
+        }, {
+            filepath: "test/images/noodle@1x^480w.png",
+            classname: "noodle",
+            queries: [
+                "1x^480w"
+            ],
+            width: 32,
+            height: 32
+        }, {
+            filepath: "test/images/noodle@2x.png",
+            classname: "noodle",
+            queries: ["2x"],
+            width: 128,
+            height: 128
+        }]
+
+        var expectedImageFileInfoHash = {
+            '1x': [{
+                filepath: 'test/images/noodle@1x,2x^480w.png',
+                classname: 'noodle',
+                queries: [
+                    "1x",
+                    "2x^480w"
+                ],
+                width: 64,
+                height: 64
+            }],
+            '2x^480w': [{
+                filepath: 'test/images/noodle@1x,2x^480w.png',
+                classname: 'noodle',
+                queries: [
+                    "1x",
+                    "2x^480w"
+                ],
+                width: 64,
+                height: 64 
+            }],
+            '1x^480w': [{
+                filepath: 'test/images/noodle@1x^480w.png',
+                classname: 'noodle',
+                queries: [
+                    "1x^480w"
+                ],
+                width: 32,
+                height: 32
+            }],
+            '2x': [{
+                filepath: 'test/images/noodle@2x.png',
+                classname: 'noodle',
+                queries: ["2x"],
+                width: 128,
+                height: 128
+            }]
+        }
+
+        it("should return expected imageFileInfoHash", function () {
+            bgi.groupImageFileInfoByQuery(imageFileInfoArray).should.eql(expectedImageFileInfoHash);
+        })
     })
 })
