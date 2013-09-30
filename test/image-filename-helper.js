@@ -23,67 +23,67 @@ describe("ImageFilenameHelper", function () {
 	describe("(Parsers)", function() {
 
 		//
-		// parseMediaExpression
+		// parseMediaDescriptorAsExpressionObject
 		//
 
-		describe("#parseMediaExpression", function () {
+		describe("#parseMediaDescriptorAsExpressionObject", function () {
 			// 640w
-			it("should return correct @media expression object when expression is \"640w\"", function () {
-				helper.parseMediaExpression("640w").should.include({
+			it("should return correct @media descriptor object when descriptor is \"640w\"", function () {
+				helper.parseMediaDescriptorAsExpressionObject("640w").should.include({
 					feature: "min-width",
 					value: 640
 				});
 			})
 			// 1x
-			it("should return correct @media expression object when expression is \"1x\"", function () {
-				helper.parseMediaExpression("1x").should.include({
+			it("should return correct @media descriptor object when descriptor is \"1x\"", function () {
+				helper.parseMediaDescriptorAsExpressionObject("1x").should.include({
 					feature: "min-device-pixel-ratio",
 					value: 1
 				});
 			})
 			// 1.5x
-			it("should return correct @media expression object when expression is \"1.5x\"", function () {
-				helper.parseMediaExpression("1.5x").should.include({
+			it("should return correct @media descriptor object when descriptor is \"1.5x\"", function () {
+				helper.parseMediaDescriptorAsExpressionObject("1.5x").should.include({
 					feature: "min-device-pixel-ratio",
 					value: 1.5
 				});
 			})
 			// 768h
-			it("should return correct @media expression object when expression is \"768h\"", function () {
-				helper.parseMediaExpression("768h").should.include({
+			it("should return correct @media descriptor object when descriptor is \"768h\"", function () {
+				helper.parseMediaDescriptorAsExpressionObject("768h").should.include({
 					feature: "min-height",
 					value: 768
 				});
 			})
 			// null
-			it("should throw error when expression is `null`", function () {
+			it("should throw error when descriptor is `null`", function () {
 				(function () {
-					helper.parseMediaExpression(null);
-				}).should.throwError(/expression/);
+					helper.parseMediaDescriptorAsExpressionObject(null);
+				}).should.throwError(/descriptor/);
 			})
 			// ""
-			it("should throw error when expression is empty string", function () {
+			it("should throw error when descriptor is empty string", function () {
 				(function () {
-					helper.parseMediaExpression("");
-				}).should.throwError(/expression/);
+					helper.parseMediaDescriptorAsExpressionObject("");
+				}).should.throwError(/descriptor/);
 			})
 			// 640z
-			it("should throw error when expression is \"640z\"", function () {
+			it("should throw error when descriptor is \"640z\"", function () {
 				(function () {
-					helper.parseMediaExpression("640z");
-				}).should.throwError(/expression/);
+					helper.parseMediaDescriptorAsExpressionObject("640z");
+				}).should.throwError(/descriptor/);
 			})
 			// x
-			it("should throw error when expression is \"x\"", function () {
+			it("should throw error when descriptor is \"x\"", function () {
 				(function () {
-					helper.parseMediaExpression("x");
-				}).should.throwError(/expression/);
+					helper.parseMediaDescriptorAsExpressionObject("x");
+				}).should.throwError(/descriptor/);
 			})
 			// 640w^2x
-			it("should throw error when expression is \"640w^2x\"", function () {
+			it("should throw error when descriptor is \"640w^2x\"", function () {
 				(function () {
-					helper.parseMediaExpression("640w^2x");
-				}).should.throwError(/expression/);
+					helper.parseMediaDescriptorAsExpressionObject("640w^2x");
+				}).should.throwError(/descriptor/);
 			})
 		})
 
