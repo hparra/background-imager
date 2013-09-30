@@ -212,25 +212,25 @@ describe("ImageFilenameHelper", function () {
 	describe("(Helpers)", function() {
 
 		//
-		// getMediaSubstring()
+		// getMediaRule()
 		//
 
-		describe("#getMediaSubstring", function () {
+		describe("#getMediaRule", function () {
 			// noodle.jpg
 			it("should return `null` when filename is \"noodle.jpg\"", function () {
-				should.equal(helper.getMediaSubstring("noodle.jpg"), null);
+				should.equal(helper.getMediaRule("noodle.jpg"), null);
 			})
 			// noodle@1x.jpg
 			it("should return correct substring when filename is \"noodle@1x.jpg\"", function () {
-				helper.getMediaSubstring("noodle@1x.jpg").should.equal("1x");
+				helper.getMediaRule("noodle@1x.jpg").should.equal("1x");
 			})
 			// noodle@1x^640w.jpg
 			it("should return correct substring when filename is \"noodle@1x^640w.jpg\"", function () {
-				helper.getMediaSubstring("noodle@1x^640w.jpg").should.equal("1x^640w");
+				helper.getMediaRule("noodle@1x^640w.jpg").should.equal("1x^640w");
 			})
 			// noodle@640w^2x,1x.jpg
 			it("should return correct substring when filename is \"noodle@640w^2x,1x.jpg\"", function () {
-				helper.getMediaSubstring("noodle@640w^2x,1x.jpg").should.equal("640w^2x,1x");
+				helper.getMediaRule("noodle@640w^2x,1x.jpg").should.equal("640w^2x,1x");
 			})
 		})
 
