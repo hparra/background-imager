@@ -111,6 +111,27 @@ describe("ImageFilenameHelper", function () {
 		})
 
 		//
+		// parseMediaQueryAsExpressions
+		//
+
+		describe("#parseMediaQueryAsExpressions", function () {
+			// 640w^1x
+			it("should return correct @media expressions when query is \"640w^1x\"", function () {
+				helper.parseMediaQueryAsExpressions("640w^1x").should.eql([
+					"(min-width: 640px)",
+					"(min-device-pixel-ratio: 1)"
+				]);
+			})
+			// 1.5x^768h
+			it("should return correct @media expressions when query is \"1.5x^768h\"", function () {
+				helper.parseMediaQueryAsExpressions("1.5x^768h").should.eql([
+					"(min-device-pixel-ratio: 1.5)",
+					"(min-height: 768px)"
+				]);
+			})
+		})
+
+		//
 		// parseMediaQueries
 		//
 
