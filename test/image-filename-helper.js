@@ -28,31 +28,31 @@ describe("ImageFilenameHelper", function () {
 
 		describe("#parseMediaDescriptorAsExpressionObject", function () {
 			// 640w
-			it("should return correct @media descriptor object when descriptor is \"640w\"", function () {
+			it("should return correct @media expression object when descriptor is \"640w\"", function () {
 				helper.parseMediaDescriptorAsExpressionObject("640w").should.include({
 					feature: "min-width",
-					value: 640
+					value: "640px"
 				});
 			})
 			// 1x
-			it("should return correct @media descriptor object when descriptor is \"1x\"", function () {
+			it("should return correct @media expression object when descriptor is \"1x\"", function () {
 				helper.parseMediaDescriptorAsExpressionObject("1x").should.include({
 					feature: "min-device-pixel-ratio",
 					value: 1
 				});
 			})
 			// 1.5x
-			it("should return correct @media descriptor object when descriptor is \"1.5x\"", function () {
+			it("should return correct @media expression object when descriptor is \"1.5x\"", function () {
 				helper.parseMediaDescriptorAsExpressionObject("1.5x").should.include({
 					feature: "min-device-pixel-ratio",
 					value: 1.5
 				});
 			})
 			// 768h
-			it("should return correct @media descriptor object when descriptor is \"768h\"", function () {
+			it("should return correct @media expression object when descriptor is \"768h\"", function () {
 				helper.parseMediaDescriptorAsExpressionObject("768h").should.include({
 					feature: "min-height",
-					value: 768
+					value: "768px"
 				});
 			})
 			// null
@@ -88,6 +88,29 @@ describe("ImageFilenameHelper", function () {
 		})
 
 		//
+		// parseMediaDescriptorAsExpression
+		//
+
+		describe("#parseMediaDescriptorAsExpression", function () {
+			// 640w
+			it("should return correct @media expression when descriptor is \"640w\"", function () {
+				helper.parseMediaDescriptorAsExpression("640w").should.equal("(min-width: 640px)");
+			})
+			// 1x
+			it("should return correct @media expression when descriptor is \"1x\"", function () {
+				helper.parseMediaDescriptorAsExpression("1x").should.equal("(min-device-pixel-ratio: 1)");
+			})
+			// 1.5x
+			it("should return correct @media expression when descriptor is \"1.5x\"", function () {
+				helper.parseMediaDescriptorAsExpression("1.5x").should.equal("(min-device-pixel-ratio: 1.5)");
+			})
+			// 768h
+			it("should return correct @media expression when descriptor is \"768h\"", function () {
+				helper.parseMediaDescriptorAsExpression("768h").should.equal("(min-height: 768px)");
+			})
+		})
+
+		//
 		// parseMediaQueries
 		//
 
@@ -115,7 +138,7 @@ describe("ImageFilenameHelper", function () {
 							value: 1
 						},{
 							feature: "min-width",
-							value: 640
+							value: "640px"
 						}]
 					);
 			});
@@ -125,7 +148,7 @@ describe("ImageFilenameHelper", function () {
 					.and.includeEql(
 						[{
 							feature: "min-width",
-							value: 640
+							value: "640px"
 						},{
 							feature: "min-device-pixel-ratio",
 							value: 2
@@ -174,7 +197,7 @@ describe("ImageFilenameHelper", function () {
 							value: 1
 						},{
 							feature: "min-width",
-							value: 640
+							value: "640px"
 						}]
 					);
 			})
@@ -189,7 +212,7 @@ describe("ImageFilenameHelper", function () {
 					.and.includeEql(
 						[{
 							feature: "min-width",
-							value: 640
+							value: "640px"
 						},{
 							feature: "min-device-pixel-ratio",
 							value: 2
