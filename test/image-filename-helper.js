@@ -212,7 +212,7 @@ describe("ImageFilenameHelper", function () {
 	describe("(Helpers)", function() {
 
 		//
-		// isImageFilenameWithMedia()
+		// getMediaSubstring()
 		//
 
 		describe("#getMediaSubstring", function () {
@@ -229,8 +229,31 @@ describe("ImageFilenameHelper", function () {
 				helper.getMediaSubstring("noodle@1x^640w.jpg").should.equal("1x^640w");
 			})
 			// noodle@640w^2x,1x.jpg
-			it("should return correct substring when filename is \"noodle@1x^640w.jpg\"", function () {
+			it("should return correct substring when filename is \"noodle@640w^2x,1x.jpg\"", function () {
 				helper.getMediaSubstring("noodle@640w^2x,1x.jpg").should.equal("640w^2x,1x");
+			})
+		})
+
+		//
+		// getMediaQueries()
+		//
+
+		describe("#getMediaQueries", function () {
+			// noodle.jpg
+			it("should return empty array when filename is \"noodle.jpg\"", function () {
+				helper.getMediaQueries("noodle.jpg").should.be.instanceOf(Array).and.empty;
+			})
+			// noodle@1x.jpg
+			it("should return correct array when filename is \"noodle@1x.jpg\"", function () {
+				helper.getMediaQueries("noodle@1x.jpg").should.include("1x");
+			})
+			// noodle@1x^640w.jpg
+			it("should return correct array when filename is \"noodle@1x^640w.jpg\"", function () {
+				helper.getMediaQueries("noodle@1x^640w.jpg").should.include("1x^640w");
+			})
+			// noodle@640w^2x,1x.jpg
+			it("should return correct array when filename is \"noodle@640w^2x,1x.jpg\"", function () {
+				helper.getMediaQueries("noodle@640w^2x,1x.jpg").should.include("640w^2x").and.include("1x");
 			})
 		})
 
