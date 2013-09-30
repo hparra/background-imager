@@ -279,6 +279,29 @@ describe("ImageFilenameHelper", function () {
 				helper.isImage("noodle.bmp").should.equal(false);
 			})
 		})
+
+		//
+		// getRatio()
+		//
+
+		describe("#getRatio", function () {
+			// noodle@1.5x.png
+			it("should return 1.5 when string is \"noodle@1.5x.png\"", function () {
+				helper.getRatio("noodle@1.5x.png").should.equal(1.5);
+			})
+			// 2x
+			it("should return 2 when string is \"2x\"", function () {
+				helper.getRatio("2x").should.equal(2);
+			})
+			// 640w^1x
+			it("should return 1 when string is \"640w^1x\"", function () {
+				helper.getRatio("640w^1x").should.equal(1);
+			})
+			// 640w
+			it("should return 1 when string is \"640w\"", function () {
+				should.equal(helper.getRatio("640w"), null);
+			})
+		})
 	})
 
 	//
