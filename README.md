@@ -1,16 +1,15 @@
 # background-imager.js
 
-Reads a directory for images with special descriptors to produce responsive CSS classes using background-image. It is particularly helpful when dealing with a large number of classes with 2 or more image versions each.
+background-imager takes image files with [micro media queries](https://gist.github.com/hparra/6789798/) and produces responsive CSS classes. It is particularly helpful when dealing with a large number of CSS classes with 2 or more image versions each.
 
 ## Example
 
 A directory with the following images...
 
 ```
-noodle@1x.png
+noodle@1x,2x^480w.png
+noodle@1x^480w.png
 noodle@2x.png
-noodle-small@1x.png
-noodle-small@2x.png
 ```
 
 ...produces similar proceeding CSS output:
@@ -18,7 +17,7 @@ noodle-small@2x.png
 
 ```css
 .noodle {
-  background-image: url("test/images/noodle@1x.png");
+  background-image: url("test/images/noodle@1x,2x^480w.png");
   width: 64px;
   height: 64px;
 }
@@ -32,7 +31,7 @@ noodle-small@2x.png
 
 @media only screen and (max-width: 480px) {
   .noodle {
-    background-image: url("test/images/noodle-small@1x.png");
+    background-image: url("test/images/noodle@1x^480w.png");
     width: 28px;
     height: 28px;
   }
@@ -40,22 +39,17 @@ noodle-small@2x.png
 
 @media only screen and (max-width: 480px) and (min-device-pixel-ratio: 2) {
   .noodle {
-    background-image: url("test/images/noodle-small@2x.png");
+    background-image: url("test/images/noodle-small@1x,2x^480w.png");
     background-size: 28px 28px;
   }
 }
 ```
 
-(Actual output contains several media queries per media rule to ensure cross-platform device-pixel-ratio support. They were removed here for brevity.)
+Actual output contains several media queries per media rule to ensure cross-platform device-pixel-ratio support. They were removed here for brevity. Please see `test/noodle.css` for actual output.
 
 ## Use
 
-`background-imager --help`
-
-Script searches for image files with the following descriptors in the filename:
-* `@1x` e.g. noodle@1x.png
-* `@2x` e.g. noodle@2x.png
-* `-small`  e.g. noodle-small@1x.png
+See `background-imager --help`
 
 ## Dependencies
 
@@ -65,7 +59,7 @@ On Mac OS X via brew `brew install imagemagick`
 
 ## Demo
 
-See `test/noodle.html`, which uses `test/noodle.css` that was generated from running script against `images/`. This is also part of the testing.
+See `test/noodle.html`, which uses `test/noodle.css` that was generated from running script against `images/`. This CSS file is also used in testing.
 
 ## Testing
 
@@ -73,21 +67,22 @@ See `test/noodle.html`, which uses `test/noodle.css` that was generated from run
 npm test
 ```
 
-At the moment there is a simple test using diff between produced CSS output and expected output (file). A proper testing framework implementing this ability should be used. CLI must be further refactored to allow for proper testing.
+Numerous BDD-style tests using Mocha, though coverage is just short of 100%.
+
+## Known Issues
+
+While the `x` descriptor feature should correspond to the `max-device-pixel-ratio` media query feature there is difficulty in producing multiple at-rules that work as expected. As a result all queries use `min-device-pixel-ratio`, though the codebase makes this change trivial in the case that a viable `max-device-pixel-ratio` solution is found.
 
 ## TODO
 
-* Add tests for module and CLI
 * Add support for both GraphicsMagick and ImageMagick
-* Add support for @1.5x
-* Add tablet support (medium)
-* Add option to specify media expression used for -small
+* Fork and use code base to produce `<img srcset>` and `<picture>`
 
 ## License
 
 (The MIT License)
 
-Copyright (c) 2013 [Hector Guillermo Parra Alvarez](mailto:hector@hectorparra.com)
+Copyright (c) 2013 [Hector Guillermo Parra Alvarez](https://twitter.com/hgparra)
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
