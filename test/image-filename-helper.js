@@ -226,6 +226,30 @@ describe("ImageFilenameHelper", function () {
 					.and.include("1x");
 			})
 		})
+		
+		//
+		// removeMediaDescriptorByFeature
+		//
+
+		describe("#removeMediaDescriptorByFeature", function () {
+			// "640w^2x"
+			it("should return \"2x\" when query is \"640w^2x\" and feature is \"w\"", function () {
+				helper.removeMediaDescriptorByFeature("640w^2x", 'w').should.equal("2x");
+			})
+			// "640w^2x"
+			it("should return \"640w\" when query is \"640w^2x\" and feature is \"x\"", function () {
+				helper.removeMediaDescriptorByFeature("640w^2x", 'x').should.equal("640w");
+			})
+			// ""
+			it("should return an empty string when query is \"2x\" and feature is \"x\"", function () {
+				helper.removeMediaDescriptorByFeature("2x", 'x').should.be.empty;
+			})
+			// ""
+			it("should return an empty string when query is an empty and feature is \"x\"", function () {
+				helper.removeMediaDescriptorByFeature("", 'x').should.be.empty;
+			})
+		})
+
 	})
 
 	//
