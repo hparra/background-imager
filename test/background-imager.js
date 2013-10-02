@@ -5,6 +5,10 @@ var should = require('should'),
 
 describe("BackgroundImager", function () {
 
+    //
+    // getImageFileInfo
+    //
+
     describe("#getImageFileInfo", function () {
         // noodle@1x.png
         it("should return the expected file info \"noodle@1x^480w.png\"", function (done) {
@@ -62,6 +66,10 @@ describe("BackgroundImager", function () {
         })
     })
 
+    //
+    // getImageFileInfoArray
+    //
+
     describe("#getImageFileInfoArray", function () {
 
         var filepaths = [
@@ -107,8 +115,12 @@ describe("BackgroundImager", function () {
         });
     })
 
+    //
+    // groupImageFileInfoByQuery
+    //
+
     // NOTE: ugly test - is there a better way to do this?
-    describe("groupImageFileInfoByQuery", function () {
+    describe("#groupImageFileInfoByQuery", function () {
         var imageFileInfoArray = [{
             filepath: "test/images/noodle@1x,2x^480w.png",
             classname: "noodle",
