@@ -6,6 +6,46 @@ var should = require('should'),
 describe("BackgroundImager", function () {
 
     //
+    // generatePixelDensityExpressions
+    //
+
+    describe("#generatePixelDensityExpressions", function () {
+        // 1.5
+        it("should return the expected array when density is \"1.5\"", function () {
+            bgi.generatePixelDensityExpressions(1.5).should.eql([
+                "(-webkit-min-device-pixel-ratio: 1.5)",
+                "(min--moz-device-pixel-ratio: 1.5)",
+                "(-o-min-device-pixel-ratio: 15/10)",
+                "(min-device-pixel-ratio: 1.5)",
+                "(min-resolution: 144dpi)",
+                "(min-resolution: 1.5dppx)"
+            ])
+        })
+        // 2
+        it("should return the expected array when density is \"2\"", function () {
+            bgi.generatePixelDensityExpressions(2).should.eql([
+                "(-webkit-min-device-pixel-ratio: 2)",
+                "(min--moz-device-pixel-ratio: 2)",
+                "(-o-min-device-pixel-ratio: 2/1)",
+                "(min-device-pixel-ratio: 2)",
+                "(min-resolution: 192dpi)",
+                "(min-resolution: 2dppx)"
+            ])
+        })
+        // 2 and true
+        it("should return the expected array when density is \"2\" and isMax is \"true\"", function () {
+            bgi.generatePixelDensityExpressions(2, true).should.eql([
+                "(-webkit-max-device-pixel-ratio: 2)",
+                "(max--moz-device-pixel-ratio: 2)",
+                "(-o-max-device-pixel-ratio: 2/1)",
+                "(max-device-pixel-ratio: 2)",
+                "(max-resolution: 192dpi)",
+                "(max-resolution: 2dppx)"
+            ])
+        })
+    })
+
+    //
     // getImageFileInfo
     //
 
