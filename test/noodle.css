@@ -7,6 +7,32 @@
 }
 
 @media
+only screen and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (min--moz-device-pixel-ratio: 1.5),
+only screen and (-o-min-device-pixel-ratio: 15/10),
+only screen and (min-device-pixel-ratio: 1.5),
+only screen and (min-resolution: 144dpi),
+only screen and (min-resolution: 1.5dppx) {
+  .noodle {
+    background-image: url("images/noodle@1.5x.png");
+    background-size: 64px 64px;
+  }
+}
+
+@media
+only screen and (max-width: 480px) and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (max-width: 480px) and (min--moz-device-pixel-ratio: 1.5),
+only screen and (max-width: 480px) and (-o-min-device-pixel-ratio: 15/10),
+only screen and (max-width: 480px) and (min-device-pixel-ratio: 1.5),
+only screen and (max-width: 480px) and (min-resolution: 144dpi),
+only screen and (max-width: 480px) and (min-resolution: 1.5dppx) {
+  .noodle {
+    background-image: url("images/noodle@1.5x^480w.png");
+    background-size: 32px 32px;
+  }
+}
+
+@media
 only screen and (max-width: 480px) and (-webkit-min-device-pixel-ratio: 2),
 only screen and (max-width: 480px) and (min--moz-device-pixel-ratio: 2),
 only screen and (max-width: 480px) and (-o-min-device-pixel-ratio: 2/1),
