@@ -189,4 +189,54 @@ describe("BackgroundImager", function () {
             bgi.groupImageFileInfoByQuery(imageFileInfoArray).should.eql(expectedImageFileInfoHash);
         })
     })
+
+    //
+    // generateRuleSet
+    //
+
+    describe("#generateRuleSet", function () {
+        //
+        it("should generate the correct ruleset from the \"noodle@1x,2x^480w.png\" ImageFileInfo object & \"1x\" query", function () {
+            bgi.generateRuleSet({
+                filepath: 'test/images/noodle@1x,2x^480w.png',
+                classname: 'noodle',
+                queries: [
+                    "1x",
+                    "2x^480w"
+                ],
+                width: 64,
+                height: 64
+            }, "1x", {
+
+            }).should.eql({
+                selector: ".noodle",
+                rules: {
+                    "background-image": "url(\"test/images/noodle@1x,2x^480w.png\")",
+                    "width": "64px",
+                    "height": "64px"
+                }
+            })
+        })
+        //
+        it("should generate the correct ruleset from the \"noodle@1x,2x^480w.png\" ImageFileInfo object & \"2x^480w\" query", function () {
+            bgi.generateRuleSet({
+                filepath: 'test/images/noodle@1x,2x^480w.png',
+                classname: 'noodle',
+                queries: [
+                    "1x",
+                    "2x^480w"
+                ],
+                width: 64,
+                height: 64
+            }, "2x^480w", {
+
+            }).should.eql({
+                selector: ".noodle",
+                rules: {
+                    "background-image": "url(\"test/images/noodle@1x,2x^480w.png\")",
+                    "background-size": "32px 32px"
+                }
+            })
+        })
+    })
 })
