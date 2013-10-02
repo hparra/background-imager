@@ -30,28 +30,28 @@ describe("ImageFilenameHelper", function () {
 			// 640w
 			it("should return correct @media expression object when descriptor is \"640w\"", function () {
 				helper.parseMediaDescriptorAsExpressionObject("640w").should.include({
-					feature: "min-width",
+					feature: "max-width",
 					value: "640px"
 				});
 			})
 			// 1x
 			it("should return correct @media expression object when descriptor is \"1x\"", function () {
 				helper.parseMediaDescriptorAsExpressionObject("1x").should.include({
-					feature: "min-device-pixel-ratio",
+					feature: "max-device-pixel-ratio",
 					value: 1
 				});
 			})
 			// 1.5x
 			it("should return correct @media expression object when descriptor is \"1.5x\"", function () {
 				helper.parseMediaDescriptorAsExpressionObject("1.5x").should.include({
-					feature: "min-device-pixel-ratio",
+					feature: "max-device-pixel-ratio",
 					value: 1.5
 				});
 			})
 			// 768h
 			it("should return correct @media expression object when descriptor is \"768h\"", function () {
 				helper.parseMediaDescriptorAsExpressionObject("768h").should.include({
-					feature: "min-height",
+					feature: "max-height",
 					value: "768px"
 				});
 			})
@@ -94,19 +94,19 @@ describe("ImageFilenameHelper", function () {
 		describe("#parseMediaDescriptorAsExpression", function () {
 			// 640w
 			it("should return correct @media expression when descriptor is \"640w\"", function () {
-				helper.parseMediaDescriptorAsExpression("640w").should.equal("(min-width: 640px)");
+				helper.parseMediaDescriptorAsExpression("640w").should.equal("(max-width: 640px)");
 			})
 			// 1x
 			it("should return correct @media expression when descriptor is \"1x\"", function () {
-				helper.parseMediaDescriptorAsExpression("1x").should.equal("(min-device-pixel-ratio: 1)");
+				helper.parseMediaDescriptorAsExpression("1x").should.equal("(max-device-pixel-ratio: 1)");
 			})
 			// 1.5x
 			it("should return correct @media expression when descriptor is \"1.5x\"", function () {
-				helper.parseMediaDescriptorAsExpression("1.5x").should.equal("(min-device-pixel-ratio: 1.5)");
+				helper.parseMediaDescriptorAsExpression("1.5x").should.equal("(max-device-pixel-ratio: 1.5)");
 			})
 			// 768h
 			it("should return correct @media expression when descriptor is \"768h\"", function () {
-				helper.parseMediaDescriptorAsExpression("768h").should.equal("(min-height: 768px)");
+				helper.parseMediaDescriptorAsExpression("768h").should.equal("(max-height: 768px)");
 			})
 		})
 
@@ -118,15 +118,15 @@ describe("ImageFilenameHelper", function () {
 			// 640w^1x
 			it("should return correct @media expressions when query is \"640w^1x\"", function () {
 				helper.parseMediaQueryAsExpressions("640w^1x").should.eql([
-					"(min-width: 640px)",
-					"(min-device-pixel-ratio: 1)"
+					"(max-width: 640px)",
+					"(max-device-pixel-ratio: 1)"
 				]);
 			})
 			// 1.5x^768h
 			it("should return correct @media expressions when query is \"1.5x^768h\"", function () {
 				helper.parseMediaQueryAsExpressions("1.5x^768h").should.eql([
-					"(min-device-pixel-ratio: 1.5)",
-					"(min-height: 768px)"
+					"(max-device-pixel-ratio: 1.5)",
+					"(max-height: 768px)"
 				]);
 			})
 		})
@@ -145,7 +145,7 @@ describe("ImageFilenameHelper", function () {
 				helper.parseMediaQueries("1x").should.be.instanceOf(Array)
 					.and.includeEql(
 						[{
-							feature: "min-device-pixel-ratio",
+							feature: "max-device-pixel-ratio",
 							value: 1
 						}]
 					);
@@ -155,10 +155,10 @@ describe("ImageFilenameHelper", function () {
 				helper.parseMediaQueries("1x^640w").should.be.instanceOf(Array)
 					.and.includeEql(
 						[{
-							feature: "min-device-pixel-ratio",
+							feature: "max-device-pixel-ratio",
 							value: 1
 						},{
-							feature: "min-width",
+							feature: "max-width",
 							value: "640px"
 						}]
 					);
@@ -168,16 +168,16 @@ describe("ImageFilenameHelper", function () {
 				helper.parseMediaQueries("640w^2x,1x").should.be.instanceOf(Array)
 					.and.includeEql(
 						[{
-							feature: "min-width",
+							feature: "max-width",
 							value: "640px"
 						},{
-							feature: "min-device-pixel-ratio",
+							feature: "max-device-pixel-ratio",
 							value: 2
 						}]
 					)
 					.and.includeEql(
 						[{
-							feature: "min-device-pixel-ratio",
+							feature: "max-device-pixel-ratio",
 							value: 1
 						}]
 					);
