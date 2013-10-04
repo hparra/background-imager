@@ -20,6 +20,28 @@ only screen and (min-resolution: 1.5dppx) {
 }
 
 @media
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (min--moz-device-pixel-ratio: 2),
+only screen and (-o-min-device-pixel-ratio: 2/1),
+only screen and (min-device-pixel-ratio: 2),
+only screen and (min-resolution: 192dpi),
+only screen and (min-resolution: 2dppx) {
+  .noodle {
+    background-image: url("images/noodle@2x.png");
+    background-size: 64px 64px;
+  }
+}
+
+@media
+only screen and (max-width: 480px) {
+  .noodle {
+    background-image: url("images/noodle@1x^480w.png");
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media
 only screen and (max-width: 480px) and (-webkit-min-device-pixel-ratio: 1.5),
 only screen and (max-width: 480px) and (min--moz-device-pixel-ratio: 1.5),
 only screen and (max-width: 480px) and (-o-min-device-pixel-ratio: 15/10),
@@ -42,28 +64,6 @@ only screen and (max-width: 480px) and (min-resolution: 2dppx) {
   .noodle {
     background-image: url("images/noodle@1x,2x^480w.png");
     background-size: 32px 32px;
-  }
-}
-
-@media
-only screen and (max-width: 480px) {
-  .noodle {
-    background-image: url("images/noodle@1x^480w.png");
-    width: 32px;
-    height: 32px;
-  }
-}
-
-@media
-only screen and (-webkit-min-device-pixel-ratio: 2),
-only screen and (min--moz-device-pixel-ratio: 2),
-only screen and (-o-min-device-pixel-ratio: 2/1),
-only screen and (min-device-pixel-ratio: 2),
-only screen and (min-resolution: 192dpi),
-only screen and (min-resolution: 2dppx) {
-  .noodle {
-    background-image: url("images/noodle@2x.png");
-    background-size: 64px 64px;
   }
 }
 
