@@ -259,6 +259,37 @@ describe("ImageFilenameHelper", function () {
 	describe("(Helpers)", function() {
 
 		//
+		// compareMediaQueries
+		//
+
+		describe("#compareMediaQueries", function () {
+			// "1x" compare "1x"
+			it("should return == 0 when \"1x\" compare \"1x\"", function () {
+				helper.compareMediaQueries("1x", "1x").should.equal(0);
+			})
+			// "1x" compare "2x"
+			it("should return < 0 when \"1x\" compare \"2x\"", function () {
+				helper.compareMediaQueries("1x", "2x").should.be.below(0);
+			})
+			// "1x" compare "640w^1x"
+			it("should return < 0 when \"1x\" compare \"640w^1x\"", function () {
+				helper.compareMediaQueries("1x", "640w^1x").should.be.below(0);
+			})
+			// "1x" compare "640w^2x"
+			it("should return < 0 when \"1x\" compare \"640w^2x\"", function () {
+				helper.compareMediaQueries("1x", "640w^2x").should.be.below(0);
+			})
+			// "640w^2x" compare "2x^640w"
+			it("should return > 0 when \"640w^2x\" compare \"1x\"", function () {
+				helper.compareMediaQueries("640w^2x", "1x").should.be.above(0);
+			})
+			// "480w^1x" compare "640w^1x"
+			it("should return < 0 when \"480w^1x\" compare \"640w^1x\"", function () {
+				helper.compareMediaQueries("480w^1x", "640w^1x").should.be.above(0);
+			})
+		}),
+
+		//
 		// getMediaRule()
 		//
 
