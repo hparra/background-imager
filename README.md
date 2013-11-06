@@ -4,48 +4,85 @@ background-imager takes image files with [micro media queries](https://gist.gith
 
 ## Example
 
-A directory with the following images...
+Running `background-imager test/` which has the following images:
 
 ```
 noodle@1x,2x+480w.png
 noodle@1x+480w.png
+noodle@1.5x.ping
+noodle@1.5+480w.png
 noodle@2x.png
 ```
-
-...produces similar proceeding CSS output:
-
+...will produce the following CSS output:
 
 ```css
 .noodle {
-  background-image: url("test/images/noodle@1x,2x+480w.png");
+  background-image: url("images/noodle@1x,2x+480w.png");
   width: 64px;
   height: 64px;
 }
 
-@media only screen and (min-device-pixel-ratio: 2) {
+@media
+only screen and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (min--moz-device-pixel-ratio: 1.5),
+only screen and (-o-min-device-pixel-ratio: 15/10),
+only screen and (min-device-pixel-ratio: 1.5),
+only screen and (min-resolution: 144dpi),
+only screen and (min-resolution: 1.5dppx) {
   .noodle {
-    background-image: url("test/images/noodle@2x.png");
+    background-image: url("images/noodle@1.5x.png");
     background-size: 64px 64px;
   }
 }
 
-@media only screen and (max-width: 480px) {
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (min--moz-device-pixel-ratio: 2),
+only screen and (-o-min-device-pixel-ratio: 2/1),
+only screen and (min-device-pixel-ratio: 2),
+only screen and (min-resolution: 192dpi),
+only screen and (min-resolution: 2dppx) {
   .noodle {
-    background-image: url("test/images/noodle@1x+480w.png");
-    width: 28px;
-    height: 28px;
+    background-image: url("images/noodle@2x.png");
+    background-size: 64px 64px;
   }
 }
 
-@media only screen and (max-width: 480px) and (min-device-pixel-ratio: 2) {
+@media
+only screen and (max-width: 480px) {
   .noodle {
-    background-image: url("test/images/noodle-small@1x,2x+480w.png");
-    background-size: 28px 28px;
+    background-image: url("images/noodle@1x+480w.png");
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media
+only screen and (max-width: 480px) and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (max-width: 480px) and (min--moz-device-pixel-ratio: 1.5),
+only screen and (max-width: 480px) and (-o-min-device-pixel-ratio: 15/10),
+only screen and (max-width: 480px) and (min-device-pixel-ratio: 1.5),
+only screen and (max-width: 480px) and (min-resolution: 144dpi),
+only screen and (max-width: 480px) and (min-resolution: 1.5dppx) {
+  .noodle {
+    background-image: url("images/noodle@1.5x+480w.png");
+    background-size: 32px 32px;
+  }
+}
+
+@media
+only screen and (max-width: 480px) and (-webkit-min-device-pixel-ratio: 2),
+only screen and (max-width: 480px) and (min--moz-device-pixel-ratio: 2),
+only screen and (max-width: 480px) and (-o-min-device-pixel-ratio: 2/1),
+only screen and (max-width: 480px) and (min-device-pixel-ratio: 2),
+only screen and (max-width: 480px) and (min-resolution: 192dpi),
+only screen and (max-width: 480px) and (min-resolution: 2dppx) {
+  .noodle {
+    background-image: url("images/noodle@1x,2x+480w.png");
+    background-size: 32px 32px;
   }
 }
 ```
-
-Actual output contains several media queries per media rule to ensure cross-platform device-pixel-ratio support. They were removed here for brevity. Please see `test/noodle.css` for actual output.
 
 ## Use
 
@@ -72,11 +109,6 @@ Numerous BDD-style tests using Mocha, though coverage is just short of 100%.
 ## Known Issues
 
 While the `x` descriptor feature should correspond to the `max-device-pixel-ratio` media query feature there is difficulty in producing multiple at-rules that work as expected. As a result all queries use `min-device-pixel-ratio`, though the codebase makes this change trivial in the case that a viable `max-device-pixel-ratio` solution is found.
-
-## TODO
-
-* Add support for both GraphicsMagick and ImageMagick
-* Fork and use code base to produce `<img srcset>` and `<picture>`
 
 ## License
 
