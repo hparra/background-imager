@@ -1,11 +1,11 @@
 {
   "name": "background-imager",
-  "version": "0.0.1",
-  "description": "Reads directory for images and produces responsive CSS background-image classes",
+  "version": "0.1.0",
+  "description": "Reads directory for images using micro media query DSL and produces CSS with responsive background-image classes",
   "main": "./lib/background-imager.js",
   "bin": "./bin/background-imager-cli.js",
   "scripts": {
-    "test": "echo \"funtional.js\"; node test/functional.js; mocha -R spec; exit 0"
+    "test": "mocha -R spec"
   },
   "repository": {
     "type": "git",

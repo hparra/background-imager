@@ -1,3 +1,7 @@
+//
+// Deprecated non-Mocha Test
+//
+
 var exec = require('child_process').exec;
 
 var command = "./bin/background-imager-cli.js test/images/ -u images/ | diff test/noodle.css -"
