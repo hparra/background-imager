@@ -6,15 +6,15 @@ describe("ImageFilenameHelper", function () {
 	// are these actually helpful? Makes tests harder to read
 	var HAS_NULL = "noodle.jpg",
 		HAS_1X = "noodle@1x.jpg",
-		HAS_1X_AND_640W = "noodle@1x^640w.jpg",
-		HAS_1X_OR_2X_AND_640W = "noodle@2x^640w,1x.jpg",
+		HAS_1X_AND_640W = "noodle@1x+640w.jpg",
+		HAS_1X_OR_2X_AND_640W = "noodle@2x+640w,1x.jpg",
 		HAS_2X = "noodle@2x.jpg",
-		HAS_2X_AND_640W = "noodle@2x^640w.jpg",
-		HAS_2X_AND_640W_OR_1X = "noodle@1x,2x^640w.jpg",
-		HAS_1X_AND_640W_REVERSED = "noodle@640w^1x.jpg",
-		HAS_1X_OR_2X_AND_640W_REVERSED = "noodle@640w^2x,1x.jpg",
-		HAS_2X_AND_640W_REVERSED = "noodle@640w^2x.jpg",
-		HAS_2X_AND_640W_OR_1X_REVERSED = "noodle@1x,640w^2x.jpg";
+		HAS_2X_AND_640W = "noodle@2x+640w.jpg",
+		HAS_2X_AND_640W_OR_1X = "noodle@1x,2x+640w.jpg",
+		HAS_1X_AND_640W_REVERSED = "noodle@640w+1x.jpg",
+		HAS_1X_OR_2X_AND_640W_REVERSED = "noodle@640w+2x,1x.jpg",
+		HAS_2X_AND_640W_REVERSED = "noodle@640w+2x.jpg",
+		HAS_2X_AND_640W_OR_1X_REVERSED = "noodle@1x,640w+2x.jpg";
 
 	//
 	// Tests for @media parser methods
@@ -79,10 +79,10 @@ describe("ImageFilenameHelper", function () {
 					helper.parseMediaDescriptorAsExpressionObject("x");
 				}).should.throwError(/descriptor/);
 			})
-			// 640w^2x
-			it("should throw error when descriptor is \"640w^2x\"", function () {
+			// 640w+2x
+			it("should throw error when descriptor is \"640w+2x\"", function () {
 				(function () {
-					helper.parseMediaDescriptorAsExpressionObject("640w^2x");
+					helper.parseMediaDescriptorAsExpressionObject("640w+2x");
 				}).should.throwError(/descriptor/);
 			})
 		})
@@ -115,16 +115,16 @@ describe("ImageFilenameHelper", function () {
 		//
 
 		describe("#parseMediaQueryAsExpressions", function () {
-			// 640w^1x
-			it("should return correct @media expressions when query is \"640w^1x\"", function () {
-				helper.parseMediaQueryAsExpressions("640w^1x").should.eql([
+			// 640w+1x
+			it("should return correct @media expressions when query is \"640w+1x\"", function () {
+				helper.parseMediaQueryAsExpressions("640w+1x").should.eql([
 					"(max-width: 640px)",
 					"(max-device-pixel-ratio: 1)"
 				]);
 			})
-			// 1.5x^768h
-			it("should return correct @media expressions when query is \"1.5x^768h\"", function () {
-				helper.parseMediaQueryAsExpressions("1.5x^768h").should.eql([
+			// 1.5x+768h
+			it("should return correct @media expressions when query is \"1.5x+768h\"", function () {
+				helper.parseMediaQueryAsExpressions("1.5x+768h").should.eql([
 					"(max-device-pixel-ratio: 1.5)",
 					"(max-height: 768px)"
 				]);
@@ -150,9 +150,9 @@ describe("ImageFilenameHelper", function () {
 						}]
 					);
 			});
-			// 1x^640w
-			it("should return correct media queries array when query string is \"1x^640w\"", function () {
-				helper.parseMediaQueries("1x^640w").should.be.instanceOf(Array)
+			// 1x+640w
+			it("should return correct media queries array when query string is \"1x+640w\"", function () {
+				helper.parseMediaQueries("1x+640w").should.be.instanceOf(Array)
 					.and.includeEql(
 						[{
 							feature: "max-device-pixel-ratio",
@@ -163,9 +163,9 @@ describe("ImageFilenameHelper", function () {
 						}]
 					);
 			});
-			// 640w^2x,1x
-			it("should return correct media queries array when query string is \"640w^2x,1x\"", function () {
-				helper.parseMediaQueries("640w^2x,1x").should.be.instanceOf(Array)
+			// 640w+2x,1x
+			it("should return correct media queries array when query string is \"640w+2x,1x\"", function () {
+				helper.parseMediaQueries("640w+2x,1x").should.be.instanceOf(Array)
 					.and.includeEql(
 						[{
 							feature: "max-width",
@@ -204,25 +204,25 @@ describe("ImageFilenameHelper", function () {
 				obj.should.have.property("queries")
 					.and.be.instanceOf(Array).and.be.empty;
 			})
-			// noodle@1x^640w.jpg
-			it("should return correct image file object when filename is \"noodle@1x^640w.jpg\"", function () {
-				var obj = helper.parseFilename("/path/to/noodle@1x^640w.jpg");
+			// noodle@1x+640w.jpg
+			it("should return correct image file object when filename is \"noodle@1x+640w.jpg\"", function () {
+				var obj = helper.parseFilename("/path/to/noodle@1x+640w.jpg");
 				obj.should.be.instanceOf(Object);
 				obj.should.have.property("classname", "noodle");
 				obj.should.have.property("extname", "jpg");
 				obj.should.have.property("queries")
 					.and.be.instanceOf(Array)
-					.and.include("1x^640w");
+					.and.include("1x+640w");
 			})
-			// noodle@640w^2x,1x.jpg
-			it("should return correct image file object when filename is \"noodle@640w^2x,1x.jpg\"", function () {
-				var obj = helper.parseFilename("/path/to/noodle@640w^2x,1x.jpg");
+			// noodle@640w+2x,1x.jpg
+			it("should return correct image file object when filename is \"noodle@640w+2x,1x.jpg\"", function () {
+				var obj = helper.parseFilename("/path/to/noodle@640w+2x,1x.jpg");
 				obj.should.be.instanceOf(Object);
 				obj.should.have.property("classname", "noodle");
 				obj.should.have.property("extname", "jpg");
 				obj.should.have.property("queries")
 					.and.be.instanceOf(Array)
-					.and.include("640w^2x")
+					.and.include("640w+2x")
 					.and.include("1x");
 			})
 		})
@@ -232,13 +232,13 @@ describe("ImageFilenameHelper", function () {
 		//
 
 		describe("#removeMediaDescriptorByFeature", function () {
-			// "640w^2x"
-			it("should return \"2x\" when query is \"640w^2x\" and feature is \"w\"", function () {
-				helper.removeMediaDescriptorByFeature("640w^2x", 'w').should.equal("2x");
+			// "640w+2x"
+			it("should return \"2x\" when query is \"640w+2x\" and feature is \"w\"", function () {
+				helper.removeMediaDescriptorByFeature("640w+2x", 'w').should.equal("2x");
 			})
-			// "640w^2x"
-			it("should return \"640w\" when query is \"640w^2x\" and feature is \"x\"", function () {
-				helper.removeMediaDescriptorByFeature("640w^2x", 'x').should.equal("640w");
+			// "640w+2x"
+			it("should return \"640w\" when query is \"640w+2x\" and feature is \"x\"", function () {
+				helper.removeMediaDescriptorByFeature("640w+2x", 'x').should.equal("640w");
 			})
 			// ""
 			it("should return an empty string when query is \"2x\" and feature is \"x\"", function () {
@@ -271,21 +271,21 @@ describe("ImageFilenameHelper", function () {
 			it("should return < 0 when \"1x\" compare \"2x\"", function () {
 				helper.compareMediaQueries("1x", "2x").should.be.below(0);
 			})
-			// "1x" compare "640w^1x"
-			it("should return < 0 when \"1x\" compare \"640w^1x\"", function () {
-				helper.compareMediaQueries("1x", "640w^1x").should.be.below(0);
+			// "1x" compare "640w+1x"
+			it("should return < 0 when \"1x\" compare \"640w+1x\"", function () {
+				helper.compareMediaQueries("1x", "640w+1x").should.be.below(0);
 			})
-			// "1x" compare "640w^2x"
-			it("should return < 0 when \"1x\" compare \"640w^2x\"", function () {
-				helper.compareMediaQueries("1x", "640w^2x").should.be.below(0);
+			// "1x" compare "640w+2x"
+			it("should return < 0 when \"1x\" compare \"640w+2x\"", function () {
+				helper.compareMediaQueries("1x", "640w+2x").should.be.below(0);
 			})
-			// "640w^2x" compare "2x^640w"
-			it("should return > 0 when \"640w^2x\" compare \"1x\"", function () {
-				helper.compareMediaQueries("640w^2x", "1x").should.be.above(0);
+			// "640w+2x" compare "2x+640w"
+			it("should return > 0 when \"640w+2x\" compare \"1x\"", function () {
+				helper.compareMediaQueries("640w+2x", "1x").should.be.above(0);
 			})
-			// "480w^1x" compare "640w^1x"
-			it("should return < 0 when \"480w^1x\" compare \"640w^1x\"", function () {
-				helper.compareMediaQueries("480w^1x", "640w^1x").should.be.above(0);
+			// "480w+1x" compare "640w+1x"
+			it("should return < 0 when \"480w+1x\" compare \"640w+1x\"", function () {
+				helper.compareMediaQueries("480w+1x", "640w+1x").should.be.above(0);
 			})
 		}),
 
@@ -302,13 +302,13 @@ describe("ImageFilenameHelper", function () {
 			it("should return correct substring when filename is \"noodle@1x.jpg\"", function () {
 				helper.getMediaRule("noodle@1x.jpg").should.equal("1x");
 			})
-			// noodle@1x^640w.jpg
-			it("should return correct substring when filename is \"noodle@1x^640w.jpg\"", function () {
-				helper.getMediaRule("noodle@1x^640w.jpg").should.equal("1x^640w");
+			// noodle@1x+640w.jpg
+			it("should return correct substring when filename is \"noodle@1x+640w.jpg\"", function () {
+				helper.getMediaRule("noodle@1x+640w.jpg").should.equal("1x+640w");
 			})
-			// noodle@640w^2x,1x.jpg
-			it("should return correct substring when filename is \"noodle@640w^2x,1x.jpg\"", function () {
-				helper.getMediaRule("noodle@640w^2x,1x.jpg").should.equal("640w^2x,1x");
+			// noodle@640w+2x,1x.jpg
+			it("should return correct substring when filename is \"noodle@640w+2x,1x.jpg\"", function () {
+				helper.getMediaRule("noodle@640w+2x,1x.jpg").should.equal("640w+2x,1x");
 			})
 		})
 
@@ -325,13 +325,13 @@ describe("ImageFilenameHelper", function () {
 			it("should return correct array when filename is \"noodle@1x.jpg\"", function () {
 				helper.getMediaQueries("noodle@1x.jpg").should.include("1x");
 			})
-			// noodle@1x^640w.jpg
-			it("should return correct array when filename is \"noodle@1x^640w.jpg\"", function () {
-				helper.getMediaQueries("noodle@1x^640w.jpg").should.include("1x^640w");
+			// noodle@1x+640w.jpg
+			it("should return correct array when filename is \"noodle@1x+640w.jpg\"", function () {
+				helper.getMediaQueries("noodle@1x+640w.jpg").should.include("1x+640w");
 			})
-			// noodle@640w^2x,1x.jpg
-			it("should return correct array when filename is \"noodle@640w^2x,1x.jpg\"", function () {
-				helper.getMediaQueries("noodle@640w^2x,1x.jpg").should.include("640w^2x").and.include("1x");
+			// noodle@640w+2x,1x.jpg
+			it("should return correct array when filename is \"noodle@640w+2x,1x.jpg\"", function () {
+				helper.getMediaQueries("noodle@640w+2x,1x.jpg").should.include("640w+2x").and.include("1x");
 			})
 		})
 
@@ -369,9 +369,9 @@ describe("ImageFilenameHelper", function () {
 			it("should return 2 when string is \"2x\"", function () {
 				helper.getRatio("2x").should.equal(2);
 			})
-			// 640w^1x
-			it("should return 1 when string is \"640w^1x\"", function () {
-				helper.getRatio("640w^1x").should.equal(1);
+			// 640w+1x
+			it("should return 1 when string is \"640w+1x\"", function () {
+				helper.getRatio("640w+1x").should.equal(1);
 			})
 			// 640w
 			it("should return 1 when string is \"640w\"", function () {

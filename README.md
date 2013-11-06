@@ -7,8 +7,8 @@ background-imager takes image files with [micro media queries](https://gist.gith
 A directory with the following images...
 
 ```
-noodle@1x,2x^480w.png
-noodle@1x^480w.png
+noodle@1x,2x+480w.png
+noodle@1x+480w.png
 noodle@2x.png
 ```
 
@@ -17,7 +17,7 @@ noodle@2x.png
 
 ```css
 .noodle {
-  background-image: url("test/images/noodle@1x,2x^480w.png");
+  background-image: url("test/images/noodle@1x,2x+480w.png");
   width: 64px;
   height: 64px;
 }
@@ -31,7 +31,7 @@ noodle@2x.png
 
 @media only screen and (max-width: 480px) {
   .noodle {
-    background-image: url("test/images/noodle@1x^480w.png");
+    background-image: url("test/images/noodle@1x+480w.png");
     width: 28px;
     height: 28px;
   }
@@ -39,7 +39,7 @@ noodle@2x.png
 
 @media only screen and (max-width: 480px) and (min-device-pixel-ratio: 2) {
   .noodle {
-    background-image: url("test/images/noodle-small@1x,2x^480w.png");
+    background-image: url("test/images/noodle-small@1x,2x+480w.png");
     background-size: 28px 28px;
   }
 }

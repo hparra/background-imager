@@ -51,35 +51,35 @@ describe("BackgroundImager", function () {
 
     describe("#getImageFileInfo", function () {
         // noodle@1x.png
-        it("should return the expected file info \"noodle@1x^480w.png\"", function (done) {
-            bgi.getImageFileInfo("test/images/noodle@1x^480w.png", function(err, imageFileInfo) {
+        it("should return the expected file info \"noodle@1x+480w.png\"", function (done) {
+            bgi.getImageFileInfo("test/images/noodle@1x+480w.png", function(err, imageFileInfo) {
                 if (err) {
                     done(err);
                 }
 
                 imageFileInfo.should.include({
-                    filepath: "test/images/noodle@1x^480w.png",
+                    filepath: "test/images/noodle@1x+480w.png",
                     classname: "noodle",
-                    queries: ["1x^480w"],
+                    queries: ["1x+480w"],
                     width: 32,
                     height: 32
                 })
                 done();
             })
         })
-        // noodle@1x,2x^480w.png
-        it("should return the expected file info \"noodle@1x,2x^480w.png\"", function (done) {
-            bgi.getImageFileInfo("test/images/noodle@1x,2x^480w.png", function(err, imageFileInfo) {
+        // noodle@1x,2x+480w.png
+        it("should return the expected file info \"noodle@1x,2x+480w.png\"", function (done) {
+            bgi.getImageFileInfo("test/images/noodle@1x,2x+480w.png", function(err, imageFileInfo) {
                 if (err) {
                     done(err);
                 }
 
                 imageFileInfo.should.include({
-                    filepath: "test/images/noodle@1x,2x^480w.png",
+                    filepath: "test/images/noodle@1x,2x+480w.png",
                     classname: "noodle",
                     queries: [
                         "1x",
-                        "2x^480w"
+                        "2x+480w"
                     ],
                     width: 64,
                     height: 64
@@ -113,8 +113,8 @@ describe("BackgroundImager", function () {
     describe("#getImageFileInfoArray", function () {
 
         var filepaths = [
-            "test/images/noodle@1x,2x^480w.png",
-            "test/images/noodle@1x^480w.png",
+            "test/images/noodle@1x,2x+480w.png",
+            "test/images/noodle@1x+480w.png",
             "test/images/noodle@2x.png"
         ];
 
@@ -125,20 +125,20 @@ describe("BackgroundImager", function () {
                 }
                 imageFileInfoArray.should.be.instanceOf(Array);
                 imageFileInfoArray.should.includeEql({
-                    filepath: "test/images/noodle@1x,2x^480w.png",
+                    filepath: "test/images/noodle@1x,2x+480w.png",
                     classname: "noodle",
                     queries: [
                         "1x",
-                        "2x^480w"
+                        "2x+480w"
                     ],
                     width: 64,
                     height: 64
                 })
                 imageFileInfoArray.should.includeEql({
-                    filepath: "test/images/noodle@1x^480w.png",
+                    filepath: "test/images/noodle@1x+480w.png",
                     classname: "noodle",
                     queries: [
-                        "1x^480w"
+                        "1x+480w"
                     ],
                     width: 32,
                     height: 32
@@ -162,19 +162,19 @@ describe("BackgroundImager", function () {
     // NOTE: ugly test - is there a better way to do this?
     describe("#groupImageFileInfoByQuery", function () {
         var imageFileInfoArray = [{
-            filepath: "test/images/noodle@1x,2x^480w.png",
+            filepath: "test/images/noodle@1x,2x+480w.png",
             classname: "noodle",
             queries: [
                 "1x",
-                "2x^480w"
+                "2x+480w"
             ],
             width: 64,
             height: 64
         }, {
-            filepath: "test/images/noodle@1x^480w.png",
+            filepath: "test/images/noodle@1x+480w.png",
             classname: "noodle",
             queries: [
-                "1x^480w"
+                "1x+480w"
             ],
             width: 32,
             height: 32
@@ -188,30 +188,30 @@ describe("BackgroundImager", function () {
 
         var expectedImageFileInfoHash = {
             '1x': [{
-                filepath: 'test/images/noodle@1x,2x^480w.png',
+                filepath: 'test/images/noodle@1x,2x+480w.png',
                 classname: 'noodle',
                 queries: [
                     "1x",
-                    "2x^480w"
+                    "2x+480w"
                 ],
                 width: 64,
                 height: 64
             }],
-            '2x^480w': [{
-                filepath: 'test/images/noodle@1x,2x^480w.png',
+            '2x+480w': [{
+                filepath: 'test/images/noodle@1x,2x+480w.png',
                 classname: 'noodle',
                 queries: [
                     "1x",
-                    "2x^480w"
+                    "2x+480w"
                 ],
                 width: 64,
                 height: 64 
             }],
-            '1x^480w': [{
-                filepath: 'test/images/noodle@1x^480w.png',
+            '1x+480w': [{
+                filepath: 'test/images/noodle@1x+480w.png',
                 classname: 'noodle',
                 queries: [
-                    "1x^480w"
+                    "1x+480w"
                 ],
                 width: 32,
                 height: 32
@@ -236,13 +236,13 @@ describe("BackgroundImager", function () {
 
     describe("#generateRuleSet", function () {
         //
-        it("should generate the correct ruleset from the \"noodle@1x,2x^480w.png\" ImageFileInfo object & \"1x\" query", function () {
+        it("should generate the correct ruleset from the \"noodle@1x,2x+480w.png\" ImageFileInfo object & \"1x\" query", function () {
             bgi.generateRuleSet({
-                filepath: 'test/images/noodle@1x,2x^480w.png',
+                filepath: 'test/images/noodle@1x,2x+480w.png',
                 classname: 'noodle',
                 queries: [
                     "1x",
-                    "2x^480w"
+                    "2x+480w"
                 ],
                 width: 64,
                 height: 64
@@ -251,29 +251,29 @@ describe("BackgroundImager", function () {
             }).should.eql({
                 selector: ".noodle",
                 rules: {
-                    "background-image": "url(\"test/images/noodle@1x,2x^480w.png\")",
+                    "background-image": "url(\"test/images/noodle@1x,2x+480w.png\")",
                     "width": "64px",
                     "height": "64px"
                 }
             })
         })
         //
-        it("should generate the correct ruleset from the \"noodle@1x,2x^480w.png\" ImageFileInfo object & \"2x^480w\" query", function () {
+        it("should generate the correct ruleset from the \"noodle@1x,2x+480w.png\" ImageFileInfo object & \"2x+480w\" query", function () {
             bgi.generateRuleSet({
-                filepath: 'test/images/noodle@1x,2x^480w.png',
+                filepath: 'test/images/noodle@1x,2x+480w.png',
                 classname: 'noodle',
                 queries: [
                     "1x",
-                    "2x^480w"
+                    "2x+480w"
                 ],
                 width: 64,
                 height: 64
-            }, "2x^480w", {
+            }, "2x+480w", {
 
             }).should.eql({
                 selector: ".noodle",
                 rules: {
-                    "background-image": "url(\"test/images/noodle@1x,2x^480w.png\")",
+                    "background-image": "url(\"test/images/noodle@1x,2x+480w.png\")",
                     "background-size": "32px 32px"
                 }
             })
