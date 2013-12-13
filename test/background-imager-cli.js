@@ -31,13 +31,4 @@ describe("BackgroundImagerCLI", function () {
 			done();
 		});
 	})
-
-	it("should return a \"No images found\" error", function (done) {
-		cli.run("test/", {}, function (err, data) {
-			if (err) {
-				err.message.should.equal("No images found");
-				done();
-			}
-		});
-	})
 })
